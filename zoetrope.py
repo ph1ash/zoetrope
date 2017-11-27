@@ -1,11 +1,11 @@
 import time
 import giphy_client
-import tkinter as tk 
 import random
+import numpy as np
 from urllib import request
-from PIL import Image, ImageTk 
 from giphy_client.rest import ApiException
 from pprint import pprint
+from subprocess import call
 
 # create an instance of the API class
 api_instance = giphy_client.DefaultApi()
@@ -25,11 +25,8 @@ except ApiException as e:
     print("Exception when calling DefaultApi->gifs_search_get: %s\n" % e)
 
 # Retrieve the gif
-idx = random.randint(0,24)
+idx = int(np.random.uniform(0,24))
+pprint(idx)
 request.urlretrieve(api_response.data[idx].images.fixed_height.url, "./status.gif")
 
-#root = tk.Tk()
-#img = Image.open("status.gif")
-#tkimage = ImageTk.PhotoImage(img)
-#tk.Label(root, image=tkimage).pack()
-#root.mainloop()
+call(['animate', './status.gif'])
